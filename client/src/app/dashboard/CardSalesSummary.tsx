@@ -42,7 +42,7 @@ const CardSalesSummary = () => {
   }
 
   return (
-    <div className="row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl flex flex-col justify-between max-h-[90vh] overflow-hidden">
+    <div className="row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl flex flex-col justify-between">
       {isLoading ? (
         <div className="m-5">Loading...</div>
       ) : (
@@ -56,7 +56,7 @@ const CardSalesSummary = () => {
           </div>
 
           {/* BODY */}
-          <div className="overflow-y-auto">
+          <div className="overflow-auto h-full">
             {/* BODY HEADER */}
             <div className="flex justify-between items-center mb-6 px-7 mt-5">
               <div className="text-lg font-medium">
