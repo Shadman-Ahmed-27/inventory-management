@@ -16,10 +16,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) {
-        dispatch(setIsSidebarCollapsed(true));
+      if (window.innerWidth < 640) {
+        dispatch(setIsSidebarCollapsed(true)); // Fully collapse on small screens
+      } else if (window.innerWidth < 1024) {
+        dispatch(setIsSidebarCollapsed(true)); // Compact (icon-only) view on medium screens
       } else {
-        dispatch(setIsSidebarCollapsed(false));
+        dispatch(setIsSidebarCollapsed(false)); // Full sidebar on large screens
       }
     };
 
@@ -44,7 +46,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <Sidebar />
       <main
         className={`flex flex-col w-full h-full py-7 px-9 bg-gray-50 ${
-          isSidebarCollapsed ? "md:pl-24" : "md:pl-72"
+          isSidebarCollapsed ? "md:pl-20 pl-5" : "md:pl-64 pl-3"
         }`}
       >
         <Navbar />
