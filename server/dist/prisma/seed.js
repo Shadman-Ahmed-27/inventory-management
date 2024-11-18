@@ -16,17 +16,28 @@ const client_1 = require("@prisma/client");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const prisma = new client_1.PrismaClient();
-function deleteAllData(orderedFileNames) {
+function deleteAllData() {
     return __awaiter(this, void 0, void 0, function* () {
-        const modelNames = orderedFileNames.map((fileName) => {
-            const modelName = path_1.default.basename(fileName, path_1.default.extname(fileName));
-            return modelName.charAt(0).toUpperCase() + modelName.slice(1);
-        });
-        for (const modelName of modelNames) {
+        // Define models in reverse dependency order
+        const orderedModelNames = [
+            "Sales", // Dependent on `Products`
+            "Purchases", // Dependent on `Products`
+            "ExpenseByCategory", // Dependent on `ExpenseSummary`
+            "Products", // Independent but referenced by other models
+            "ExpenseSummary", // Independent but referenced by `ExpenseByCategory`
+            "Users", // Standalone
+        ];
+        for (const modelName of orderedModelNames) {
             const model = prisma[modelName];
             if (model) {
-                yield model.deleteMany({});
-                console.log(`Cleared data from ${modelName}`);
+                try {
+                    console.log(`Deleting data from model: ${modelName}`);
+                    yield model.deleteMany({});
+                    console.log(`Successfully cleared data from ${modelName}`);
+                }
+                catch (error) {
+                    console.error(`Failed to clear data from ${modelName}:`, error);
+                }
             }
             else {
                 console.error(`Model ${modelName} not found. Please ensure the model name is correctly specified.`);
@@ -34,23 +45,27 @@ function deleteAllData(orderedFileNames) {
         }
     });
 }
-function main() {
+function seedData() {
     return __awaiter(this, void 0, void 0, function* () {
         const dataDirectory = path_1.default.join(__dirname, "seedData");
+        // Define files in dependency order
         const orderedFileNames = [
+            "users.json",
             "products.json",
             "expenseSummary.json",
             "sales.json",
-            "salesSummary.json",
             "purchases.json",
-            "purchaseSummary.json",
-            "users.json",
-            "expenses.json",
             "expenseByCategory.json",
+            "salesSummary.json",
+            "purchaseSummary.json",
+            "expenses.json",
         ];
-        yield deleteAllData(orderedFileNames);
         for (const fileName of orderedFileNames) {
             const filePath = path_1.default.join(dataDirectory, fileName);
+            if (!fs_1.default.existsSync(filePath)) {
+                console.error(`File not found: ${filePath}`);
+                continue;
+            }
             const jsonData = JSON.parse(fs_1.default.readFileSync(filePath, "utf-8"));
             const modelName = path_1.default.basename(fileName, path_1.default.extname(fileName));
             const model = prisma[modelName];
@@ -58,18 +73,31 @@ function main() {
                 console.error(`No Prisma model matches the file name: ${fileName}`);
                 continue;
             }
+            console.log(`Seeding ${modelName} with data from ${fileName}`);
             for (const data of jsonData) {
-                yield model.create({
-                    data,
-                });
+                try {
+                    yield model.create({ data });
+                }
+                catch (error) {
+                    console.error(`Failed to insert data into ${modelName} from ${fileName}:`, error);
+                }
             }
-            console.log(`Seeded ${modelName} with data from ${fileName}`);
+            console.log(`Successfully seeded ${modelName}`);
         }
+    });
+}
+function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("Starting data deletion...");
+        yield deleteAllData();
+        console.log("Starting data seeding...");
+        yield seedData();
+        console.log("Seeding process complete.");
     });
 }
 main()
     .catch((e) => {
-    console.error(e);
+    console.error("Error during seeding:", e);
 })
     .finally(() => __awaiter(void 0, void 0, void 0, function* () {
     yield prisma.$disconnect();
