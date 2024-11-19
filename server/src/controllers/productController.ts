@@ -18,7 +18,7 @@ export const getProducts = async (
     });
     res.json(products);
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving dashboard metrics" });
+    res.status(500).json({ message: "Error retrieving products" });
   }
 };
 

@@ -1,4 +1,4 @@
-import { useGetDashboardMetricsQuery } from "@/app/state/api";
+import { useGetDashboardMetricsQuery } from "@/state/api";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import numeral from "numeral";
 import React from "react";
@@ -32,7 +32,7 @@ const CardPurchaseSummary = () => {
           </div>
 
           {/* BODY */}
-          <div className="overflow-auto">
+          <div>
             {/* BODY HEADER */}
             <div className="mb-4 mt-7 px-7">
               <p className="text-xs text-gray-400">Purchased</p>

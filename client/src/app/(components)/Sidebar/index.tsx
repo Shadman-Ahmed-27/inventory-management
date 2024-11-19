@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/app/redux";
-import { setIsSidebarCollapsed } from "@/app/state";
+import { setIsSidebarCollapsed } from "@/state";
 import {
   Archive,
   CircleDollarSign,
@@ -12,6 +12,7 @@ import {
   SlidersHorizontal,
   User,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -39,12 +40,13 @@ const SidebarLink = ({
         className={`cursor-pointer flex items-center ${
           isCollapsed ? "justify-center py-4" : "justify-start px-8 py-4"
         }
-          hover:text-blue-500 hover:bg-blue-100 gap-3 transition-colors ${
-            isActive ? "bg-blue-200 text-white" : ""
-          }
-        `}
+        hover:text-blue-500 hover:bg-blue-100 gap-3 transition-colors ${
+          isActive ? "bg-blue-200 text-white" : ""
+        }
+      }`}
       >
-        <Icon className="w-6 h-6 text-gray-700" />
+        <Icon className="w-6 h-6 !text-gray-700" />
+
         <span
           className={`${
             isCollapsed ? "hidden" : "block"
@@ -79,18 +81,23 @@ const Sidebar = () => {
           isSidebarCollapsed ? "px-5" : "px-8"
         }`}
       >
-        <div>logo</div>
+        <Image
+          src="https://s3-inventorymanagement.s3.us-east-2.amazonaws.com/logo.png"
+          alt="edstock-logo"
+          width={27}
+          height={27}
+          className="rounded w-8"
+        />
         <h1
           className={`${
             isSidebarCollapsed ? "hidden" : "block"
           } font-extrabold text-2xl`}
         >
-          SHADSTOCK
+          EDSTOCK
         </h1>
+
         <button
-          className={`md:hidden px-3 py-3 rounded-full ${
-            isSidebarCollapsed ? "bg-gray-100" : "bg-gray-200"
-          } hover:bg-blue-100`}
+          className="md:hidden px-3 py-3 bg-gray-100 rounded-full hover:bg-blue-100"
           onClick={toggleSidebar}
         >
           <Menu className="w-4 h-4" />
@@ -138,10 +145,8 @@ const Sidebar = () => {
       </div>
 
       {/* FOOTER */}
-      <div className={`${isSidebarCollapsed} ? "hidden" : "block"} mb-10`}>
-        <p className="text-center text-xs text-gray-500">
-          &copy; 2024 Shadstock
-        </p>
+      <div className={`${isSidebarCollapsed ? "hidden" : "block"} mb-10`}>
+        <p className="text-center text-xs text-gray-500">&copy; 2024 Edstock</p>
       </div>
     </div>
   );

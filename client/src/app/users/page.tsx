@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetUsersQuery } from "@/app/state/api";
+import { useGetUsersQuery } from "@/state/api";
 import Header from "@/app/(components)/Header";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
@@ -11,23 +11,23 @@ const columns: GridColDef[] = [
 ];
 
 const Users = () => {
-  const { data: Users, isError, isLoading } = useGetUsersQuery();
+  const { data: users, isError, isLoading } = useGetUsersQuery();
 
   if (isLoading) {
     return <div className="py-4">Loading...</div>;
   }
 
-  if (isError || !Users) {
+  if (isError || !users) {
     return (
-      <div className="text-center text-red-500 py-4">Failed to fetch Users</div>
+      <div className="text-center text-red-500 py-4">Failed to fetch users</div>
     );
   }
 
   return (
-    <div className="flex flex-col pl-2">
+    <div className="flex flex-col">
       <Header name="Users" />
       <DataGrid
-        rows={Users}
+        rows={users}
         columns={columns}
         getRowId={(row) => row.userId}
         checkboxSelection

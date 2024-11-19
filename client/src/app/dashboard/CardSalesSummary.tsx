@@ -1,4 +1,4 @@
-import { useGetDashboardMetricsQuery } from "@/app/state/api";
+import { useGetDashboardMetricsQuery } from "@/state/api";
 import { TrendingUp } from "lucide-react";
 import React, { useState } from "react";
 import {
@@ -56,7 +56,7 @@ const CardSalesSummary = () => {
           </div>
 
           {/* BODY */}
-          <div className="overflow-auto h-full">
+          <div>
             {/* BODY HEADER */}
             <div className="flex justify-between items-center mb-6 px-7 mt-5">
               <div className="text-lg font-medium">

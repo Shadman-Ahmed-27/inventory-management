@@ -3,7 +3,7 @@
 import {
   ExpenseByCategorySummary,
   useGetExpensesByCategoryQuery,
-} from "@/app/state/api";
+} from "@/state/api";
 import { useMemo, useState } from "react";
 import Header from "@/app/(components)/Header";
 import {
@@ -89,7 +89,7 @@ const Expenses = () => {
   }
 
   return (
-    <div className="pl-4">
+    <div>
       {/* HEADER */}
       <div className="mb-5">
         <Header name="Expenses" />

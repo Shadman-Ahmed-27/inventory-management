@@ -34,7 +34,7 @@ const Settings = () => {
           <thead className="bg-gray-800 text-white">
             <tr>
               <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
-                Settings
+                Setting
               </th>
               <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Value

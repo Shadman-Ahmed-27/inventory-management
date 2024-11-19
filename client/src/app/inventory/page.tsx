@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetProductsQuery } from "@/app/state/api";
+import { useGetProductsQuery } from "@/state/api";
 import Header from "@/app/(components)/Header";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
@@ -45,7 +45,7 @@ const Inventory = () => {
   }
 
   return (
-    <div className="flex flex-col pl-2">
+    <div className="flex flex-col">
       <Header name="Inventory" />
       <DataGrid
         rows={products}

@@ -4,12 +4,11 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+/* ROUTE IMPORTS */
 import dashboardRoutes from "./routes/dashboardRoutes";
 import productRoutes from "./routes/productRoutes";
 import userRoutes from "./routes/userRoutes";
 import expenseRoutes from "./routes/expenseRoutes";
-
-/* ROUTE IMPORTS */
 
 /* CONFIGURATIONS */
 dotenv.config();

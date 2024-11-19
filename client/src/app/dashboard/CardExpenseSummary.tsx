@@ -1,7 +1,7 @@
 import {
   ExpenseByCategorySummary,
   useGetDashboardMetricsQuery,
-} from "@/app/state/api";
+} from "@/state/api";
 import { TrendingUp } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
@@ -44,7 +44,7 @@ const CardExpenseSummary = () => {
   const formattedTotalExpenses = totalExpenses.toFixed(2);
 
   return (
-    <div className="overflow-auto h-full row-span-3 bg-white shadow-md rounded-2xl flex flex-col justify-between">
+    <div className="row-span-3 bg-white shadow-md rounded-2xl flex flex-col justify-between">
       {isLoading ? (
         <div className="m-5">Loading...</div>
       ) : (
